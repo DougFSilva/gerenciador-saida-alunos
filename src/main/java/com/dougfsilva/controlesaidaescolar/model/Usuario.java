@@ -14,10 +14,14 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity(name = "usuarios")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "usuarios")
 public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;

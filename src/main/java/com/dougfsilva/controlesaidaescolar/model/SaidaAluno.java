@@ -11,10 +11,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity(name = "saida_aluno")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "saidas_alunos")
 public class SaidaAluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
