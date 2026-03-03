@@ -5,6 +5,7 @@ import com.dougfsilva.controlesaidaescolar.exceptions.RegistroDuplicadoException
 import com.dougfsilva.controlesaidaescolar.model.Turma;
 import com.dougfsilva.controlesaidaescolar.repository.TurmaRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,6 +15,7 @@ public class CriaTurmaService {
 
 	private final TurmaRepository repository;
 
+	@Transactional
 	public Turma criar(TurmaForm form) {
 		validarUnicaTurma(form.nome(), form.anoLetivo());
 		Turma turma = new Turma(null, form.nome(), form.turno(), form.anoLetivo());
