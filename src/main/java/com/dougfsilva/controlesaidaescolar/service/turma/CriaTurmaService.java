@@ -1,5 +1,8 @@
 package com.dougfsilva.controlesaidaescolar.service.turma;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+
 import com.dougfsilva.controlesaidaescolar.dto.TurmaForm;
 import com.dougfsilva.controlesaidaescolar.exceptions.RegistroDuplicadoException;
 import com.dougfsilva.controlesaidaescolar.model.Turma;
@@ -11,20 +14,22 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class CriaTurmaService {
 
 	private final TurmaRepository repository;
 
 	@Transactional
+	@PreAuthorize("hasRole('ADMIN')")
 	public Turma criar(TurmaForm form) {
 		validarUnicaTurma(form.nome(), form.anoLetivo());
-		Turma turma = new Turma(null, form.nome(), form.turno(), form.anoLetivo());
+		Turma turma = new Turma(null, form.nome(), form.turno(), form.anoLetivo(), true);
 		Turma turmaCriada = repository.save(turma);
 		log.info("Turma criada com sucesso! ID: {}", turmaCriada.getId());
 		return turmaCriada;
 	}
 
-	private void validarUnicaTurma(String nome, String anoLetivo) {
+	private void validarUnicaTurma(String nome, Integer anoLetivo) {
 		if (repository.existsByNomeAndAnoLetivo(nome, anoLetivo)) {
 			throw new RegistroDuplicadoException("Essa turma já existe na base de dados!");
 		}

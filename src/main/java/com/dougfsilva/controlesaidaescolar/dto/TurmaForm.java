@@ -16,9 +16,9 @@ public record TurmaForm(
 	    @NotNull(message = "O turno deve ser informado.")
 	    Turno turno,
 
-	    @NotBlank(message = "O ano letivo é obrigatório.")
+	    @NotNull(message = "O ano letivo é obrigatório.")
 	    @Pattern(regexp = "\\d{4}", message = "O ano letivo deve conter exatamente 4 dígitos numéricos.")
-	    String anoLetivo
+	    Integer anoLetivo
 	    
 		) {
 

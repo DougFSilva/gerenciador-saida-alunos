@@ -1,5 +1,8 @@
 package com.dougfsilva.controlesaidaescolar.service.turma;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+
 import com.dougfsilva.controlesaidaescolar.model.Turma;
 import com.dougfsilva.controlesaidaescolar.repository.AlunoRepository;
 import com.dougfsilva.controlesaidaescolar.repository.TurmaRepository;
@@ -10,12 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class DeletaTurmaService {
 
 	private final TurmaRepository turmaRepository;
 	private final AlunoRepository alunoRepository;
 
 	@Transactional
+	@PreAuthorize("hasRole('ADMIN')")
 	public void deletar(Long id) {
 		Turma turma = turmaRepository.findByIdOrElseThrow(id);
 		validarTurmaSemAlunos(turma);

@@ -32,5 +32,7 @@ public class Turma {
 	@Enumerated(EnumType.STRING)
 	private Turno turno;
 	
-	private String anoLetivo;
+	private Integer anoLetivo;
+	
+	private boolean ativa = true;
 }
