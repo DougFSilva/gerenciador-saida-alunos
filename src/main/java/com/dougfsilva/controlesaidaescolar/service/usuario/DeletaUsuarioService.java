@@ -2,6 +2,7 @@ package com.dougfsilva.controlesaidaescolar.service.usuario;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dougfsilva.controlesaidaescolar.config.SecurityUtils;
 import com.dougfsilva.controlesaidaescolar.exceptions.EntidadeEmUsoException;
@@ -9,7 +10,6 @@ import com.dougfsilva.controlesaidaescolar.model.Usuario;
 import com.dougfsilva.controlesaidaescolar.repository.SaidaAlunoRepository;
 import com.dougfsilva.controlesaidaescolar.repository.UsuarioRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

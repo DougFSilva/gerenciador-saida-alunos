@@ -2,6 +2,7 @@ package com.dougfsilva.controlesaidaescolar.service.aluno;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dougfsilva.controlesaidaescolar.config.SecurityUtils;
 import com.dougfsilva.controlesaidaescolar.dto.AlunoForm;
@@ -10,7 +11,6 @@ import com.dougfsilva.controlesaidaescolar.model.Turma;
 import com.dougfsilva.controlesaidaescolar.repository.AlunoRepository;
 import com.dougfsilva.controlesaidaescolar.repository.TurmaRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
