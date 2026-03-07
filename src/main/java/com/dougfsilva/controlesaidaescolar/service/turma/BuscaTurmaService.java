@@ -25,7 +25,7 @@ public class BuscaTurmaService {
 	
 	@PreAuthorize("hasRole('isAuthenticated()')")
 	public Page<Turma> buscarPeloNome(String nome, Pageable paginacao) {
-		return repository.findByNomeContainingIgnoreCase(nome);
+		return repository.findByNomeContainingIgnoreCase(nome, paginacao);
 	}
 	
 	@PreAuthorize("hasRole('isAuthenticated()')")

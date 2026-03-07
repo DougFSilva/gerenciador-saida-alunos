@@ -3,6 +3,7 @@ package com.dougfsilva.controlesaidaescolar.repository;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.dougfsilva.controlesaidaescolar.exceptions.ObjetoNaoEncontradoException;
@@ -19,7 +20,7 @@ public interface TurmaRepository extends JpaRepository<Turma, Long> {
 
 	boolean existsByNomeAndAnoLetivoAndIdNot(String nome, String anoLetivo, Long id);
 
-	Page<Turma> findByNomeContainingIgnoreCase(String nome);
+	Page<Turma> findByNomeContainingIgnoreCase(String nome, Pageable paginacao);
 
 	List<Turma> findByAnoLetivoOrderByAnoLetivoDesc(Integer anoLetivo);
 
