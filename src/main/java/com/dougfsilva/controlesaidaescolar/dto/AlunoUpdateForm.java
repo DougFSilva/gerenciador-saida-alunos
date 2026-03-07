@@ -24,7 +24,10 @@ public record AlunoUpdateForm(
 		LocalDate dataNascimento,
 
 		@NotNull(message = "O ID da turma é obrigatório") 
-		Long turmaId
+		Long turmaId,
+		
+		@NotNull(message = "O campo ativo deve ser informado") 
+		Boolean ativo
 		
 		) {
 

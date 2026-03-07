@@ -1,6 +1,7 @@
 package com.dougfsilva.controlesaidaescolar.service.turma;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
 
 import com.dougfsilva.controlesaidaescolar.config.SecurityUtils;
 import com.dougfsilva.controlesaidaescolar.dto.TurmaUpdateForm;
@@ -13,15 +14,20 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class EditaTurmaService {
 
 	private final TurmaRepository repository;
 	private final SecurityUtils securityUtils;
+	private final TurmaValidator turmaValidator;
 	
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
 	public Turma editar(TurmaUpdateForm form) {
 		Turma turma = repository.findByIdOrElseThrow(form.id());
+		if(!turma.getNome().equalsIgnoreCase(form.nome()) || turma.getAnoLetivo() != form.anoLetivo()) {
+			turmaValidator.validarUnicidade(form.nome(), form.anoLetivo());
+		}
 		turma.setNome(form.nome());
 		turma.setTurno(form.turno());
 		turma.setAnoLetivo(form.anoLetivo());
@@ -32,4 +38,5 @@ public class EditaTurmaService {
 	             turmaEditada.getId());
 		return turmaEditada;
 	}
+	
 }
