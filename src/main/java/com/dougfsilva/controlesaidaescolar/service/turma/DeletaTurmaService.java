@@ -29,7 +29,8 @@ public class DeletaTurmaService {
 		turmaRepository.delete(turma);
 		log.info("Usuário [{}] excluiu a Turma {} com sucesso.", 
 	             securityUtils.getUsuarioAtual(), 
-	             id);	}
+	             id);	
+		}
 
 	private void validarTurmaSemAlunos(Turma turma) {
 		if (alunoRepository.existsByTurma(turma)) {
