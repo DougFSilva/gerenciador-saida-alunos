@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,8 @@ public class Aluno {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(unique = true)
+	private String matricula;
 	private String nome;
 	private LocalDate dataNascimento;
 	private String foto;
@@ -31,4 +34,13 @@ public class Aluno {
 	private Turma turma;
 
 	private Boolean ativo = true;
+
+	public Aluno(String matricula, String nome, LocalDate dataNascimento, Turma turma) {
+		this.matricula = matricula;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.turma = turma;
+	}
+	
+	
 }

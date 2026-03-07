@@ -12,5 +12,6 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 		return findById(ID).orElseThrow(() -> 
 		new ObjetoNaoEncontradoException(String.format("Aluno com id %d não encontrado!", ID)));
 	}
+	boolean existsByMatricula(String matricula);
 	boolean existsByTurma(Turma turma);
 }

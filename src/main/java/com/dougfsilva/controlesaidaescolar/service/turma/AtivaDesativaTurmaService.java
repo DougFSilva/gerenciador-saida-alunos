@@ -3,6 +3,7 @@ package com.dougfsilva.controlesaidaescolar.service.turma;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import com.dougfsilva.controlesaidaescolar.config.SecurityUtils;
 import com.dougfsilva.controlesaidaescolar.model.Turma;
 import com.dougfsilva.controlesaidaescolar.repository.TurmaRepository;
 
@@ -13,9 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class AtivarDesativarTurmaService {
+public class AtivaDesativaTurmaService {
 
 	private final TurmaRepository repository;
+	private final SecurityUtils securityUtils;
 	
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
@@ -23,8 +25,10 @@ public class AtivarDesativarTurmaService {
 		Turma turma = repository.findByIdOrElseThrow(id);
 		turma.setAtiva(true);
 		Turma turmaAtivada = repository.save(turma);
-		log.info("Turma ativada com sucesso! ID: {}", turmaAtivada.getId());
-	}
+		log.info("Usuário [{}] ativou a Turma {} com sucesso.", 
+	             securityUtils.getUsuarioAtual(), 
+	             turmaAtivada.getId());	
+		}
 	
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
@@ -32,6 +36,7 @@ public class AtivarDesativarTurmaService {
 		Turma turma = repository.findByIdOrElseThrow(id);
 		turma.setAtiva(false);
 		Turma turmaAtivada = repository.save(turma);
-		log.info("Turma desativada com sucesso! ID: {}", turmaAtivada.getId());
-	}
+		log.info("Usuário [{}] desativou a Turma {} com sucesso.", 
+	             securityUtils.getUsuarioAtual(), 
+	             turmaAtivada.getId());		}
 }
