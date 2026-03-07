@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.dougfsilva.controlesaidaescolar.exceptions.ObjetoNaoEncontradoException;
 import com.dougfsilva.controlesaidaescolar.model.Aluno;
 import com.dougfsilva.controlesaidaescolar.model.SaidaAluno;
+import com.dougfsilva.controlesaidaescolar.model.Usuario;
 
 public interface SaidaAlunoRepository extends JpaRepository<SaidaAluno, Long> {
 
@@ -14,4 +15,9 @@ public interface SaidaAlunoRepository extends JpaRepository<SaidaAluno, Long> {
 	}
 
 	boolean existsByAluno(Aluno aluno);
+	boolean existsBySolicitadoPorOrConfirmadoPorOrCanceladoPor(Usuario solicitadoPor, Usuario confirmadoPor, Usuario CanceladoPor);
 }
+
+
+
+

@@ -39,6 +39,16 @@ public class Usuario implements UserDetails {
 	private PerfilUsuario perfil;
 
 	private Boolean ativo = true;
+	private Boolean senhaAlterada = false;
+
+	public Usuario(String nome, String cpf, String email, String senha, PerfilUsuario perfil) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.email = email;
+		this.senha = senha;
+		this.perfil = perfil;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,7 +67,7 @@ public class Usuario implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;
+		return this.senhaAlterada;
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public record TurmaUpdateForm(
 	    @Pattern(regexp = "\\d{4}", message = "O ano letivo deve conter exatamente 4 dígitos numéricos.")
 	    Integer anoLetivo,
 	    
-	    @NotNull(message = "O campo ativo deve ser informado")
+	    @NotNull(message = "O campo ativo é obrigatório")
 	    Boolean ativa
 		
 		) {

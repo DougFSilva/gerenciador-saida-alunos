@@ -11,4 +11,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 		return findById(ID).orElseThrow(
 				() -> new ObjetoNaoEncontradoException(String.format("Usuário com id %d não encontrado!", ID)));
 	}
+	
+	boolean existsByEmail(String email);
 }
