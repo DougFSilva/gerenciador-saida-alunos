@@ -22,5 +22,5 @@ public interface TurmaRepository extends JpaRepository<Turma, Long> {
 	Page<Turma> findByNomeContainingIgnoreCase(String nome);
 
 	List<Turma> findByAnoLetivoOrderByAnoLetivoDesc(Integer anoLetivo);
-	
+
 }
