@@ -1,6 +1,7 @@
 package com.dougfsilva.controlesaidaescolar.service.usuario;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.dougfsilva.controlesaidaescolar.config.PasswordService;
@@ -9,6 +10,7 @@ import com.dougfsilva.controlesaidaescolar.dto.UsuarioForm;
 import com.dougfsilva.controlesaidaescolar.model.Usuario;
 import com.dougfsilva.controlesaidaescolar.repository.UsuarioRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +27,8 @@ public class CriaUsuario {
 	@Value("${senha.padrao}")
     private String senha;
 	
+	@Transactional
+	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
 	public Usuario criar(UsuarioForm form) {
 		usuarioValidator.validarUnicidadeEmail(form.email());
 		String senhaCriptografada = passwordService.criptografar(senha);
