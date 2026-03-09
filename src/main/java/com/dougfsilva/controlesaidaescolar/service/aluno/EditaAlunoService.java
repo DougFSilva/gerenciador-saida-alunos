@@ -26,8 +26,8 @@ public class EditaAlunoService {
 
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
-	public Aluno editar(AlunoUpdateForm form) {
-		Aluno aluno = alunoRepository.findByIdOrElseThrow(form.id());
+	public Aluno editar(Long id, AlunoUpdateForm form) {
+		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
 		if (!aluno.getMatricula().equalsIgnoreCase(form.matricula())) {
 			alunoValidator.validarUnicidadeMatricula(form.matricula());
 		}

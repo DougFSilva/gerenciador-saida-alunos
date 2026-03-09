@@ -11,9 +11,6 @@ import jakarta.validation.constraints.Size;
 
 public record UsuarioUpdateForm(
 		
-		@NotNull(message = "O id é obrigatório") 
-		Long id,
-
 		@NotBlank(message = "O nome é obrigatório") 
 		@Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres") 
 		String nome,

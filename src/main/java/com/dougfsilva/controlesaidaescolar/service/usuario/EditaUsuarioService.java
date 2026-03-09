@@ -23,8 +23,8 @@ public class EditaUsuarioService {
 
 	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER') or (hasRole('FUNCIONARIO') and #form.id() == principal.id)")
 	@Transactional
-	public Usuario editar(UsuarioUpdateForm form) {
-		Usuario usuario = repository.findByIdOrElseThrow(form.id());
+	public Usuario editar(Long id, UsuarioUpdateForm form) {
+		Usuario usuario = repository.findByIdOrElseThrow(id);
 		if (!usuario.getEmail().equalsIgnoreCase(form.email())) {
 			usuarioValidator.validarUnicidadeEmail(form.email());
 		}

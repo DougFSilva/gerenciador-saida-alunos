@@ -9,9 +9,6 @@ import jakarta.validation.constraints.Size;
 
 public record TurmaUpdateForm(
 		
-		@NotNull(message = "O ID da turma é obrigatório") 
-		Long id,
-		
 		@NotBlank(message = "O nome da turma é obrigatório.")
 	    @Size(min = 2, max = 50, message = "O nome deve ter entre 2 e 50 caracteres.")
 	    String nome,

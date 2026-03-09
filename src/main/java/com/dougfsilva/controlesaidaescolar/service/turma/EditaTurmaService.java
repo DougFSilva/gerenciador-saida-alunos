@@ -23,8 +23,8 @@ public class EditaTurmaService {
 	
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
-	public Turma editar(TurmaUpdateForm form) {
-		Turma turma = repository.findByIdOrElseThrow(form.id());
+	public Turma editar(Long id, TurmaUpdateForm form) {
+		Turma turma = repository.findByIdOrElseThrow(id);
 		if(!turma.getNome().equalsIgnoreCase(form.nome()) || turma.getAnoLetivo() != form.anoLetivo()) {
 			turmaValidator.validarUnicidade(form.nome(), form.anoLetivo());
 		}
