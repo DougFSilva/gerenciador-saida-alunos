@@ -1,9 +1,14 @@
 package com.dougfsilva.controlesaidaescolar.controller;
 
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
 
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dougfsilva.controlesaidaescolar.dto.AlunoForm;
 import com.dougfsilva.controlesaidaescolar.dto.AlunoUpdateForm;
 import com.dougfsilva.controlesaidaescolar.model.Aluno;
+import com.dougfsilva.controlesaidaescolar.service.aluno.AlunoFotoService;
 import com.dougfsilva.controlesaidaescolar.service.aluno.BuscaAlunoService;
 import com.dougfsilva.controlesaidaescolar.service.aluno.CriaAlunoService;
 import com.dougfsilva.controlesaidaescolar.service.aluno.DeletaAlunoService;
@@ -41,6 +48,7 @@ public class AlunoController {
 	private final DeletaAlunoService deletaAlunoService;
 	private final EditaAlunoService editaAlunoService;
 	private final BuscaAlunoService buscaAlunoService;
+    private final AlunoFotoService alunoFotoService;
 
 	@PostMapping
 	@Operation(summary = "Cadastra um novo aluno", description = "Cria um novo registro de aluno e retorna os dados salvos")
@@ -108,6 +116,39 @@ public class AlunoController {
 	public ResponseEntity<Page<Aluno>> buscarTodos(Pageable paginacao) {
 		Page<Aluno> alunos = buscaAlunoService.buscarTodos(paginacao);
 		return ResponseEntity.ok().body(alunos);
+	}
+	
+	@PutMapping(value = "/{id}/foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<String> uploadFoto(
+	    @PathVariable Long id,
+	    @RequestParam("foto") MultipartFile foto) {
+
+	    alunoFotoService.atualizarFoto(id, foto);
+	    return ResponseEntity.ok().body("Foto atualizada com sucesso");
+	}
+
+	@GetMapping("/{id}/foto")
+	public ResponseEntity<Resource> getFoto(@PathVariable Long id) {
+	    Resource foto = alunoFotoService.getFoto(id);
+
+	    String contentType;
+	    try {
+	        contentType = Files.probeContentType(foto.getFile().toPath());
+	    } catch (IOException e) {
+	        contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+	    }
+
+	    return ResponseEntity.ok()
+	            .contentType(MediaType.parseMediaType(contentType))
+	            .header(HttpHeaders.CONTENT_DISPOSITION,
+	                    "inline; filename=\"" + foto.getFilename() + "\"")
+	            .body(foto);
+	}
+
+	@DeleteMapping("/{id}/foto")
+	public ResponseEntity<Void> deletarFoto(@PathVariable Long id) {
+	    alunoFotoService.removerFoto(id);
+	    return ResponseEntity.noContent().build();
 	}
 
 }

@@ -15,14 +15,21 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dougfsilva.controlesaidaescolar.exceptions.ProcessamentoFotoException;
+import com.dougfsilva.controlesaidaescolar.model.Aluno;
+import com.dougfsilva.controlesaidaescolar.repository.AlunoRepository;
 
 @Service
 public class AlunoFotoService {
 
 	private final Path storageLocation;
+	private final AlunoRepository alunoRepository;
 
-	public AlunoFotoService(@Value("${app.upload.dir:uploads/fotos}") String uploadDir) {
+	public AlunoFotoService(@Value("${app.upload.dir:uploads/fotos}") String uploadDir,
+			AlunoRepository alunoRepository) {
+
+		this.alunoRepository = alunoRepository;
 		this.storageLocation = Paths.get(uploadDir).toAbsolutePath().normalize();
+
 		try {
 			Files.createDirectories(this.storageLocation);
 		} catch (IOException e) {
@@ -30,9 +37,41 @@ public class AlunoFotoService {
 		}
 	}
 
-	public String salvarFoto(MultipartFile arquivo, Long alunoId) {
+	public void atualizarFoto(Long id, MultipartFile arquivo) {
+		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
+
 		validarArquivo(arquivo);
 
+		if (aluno.getFoto() != null) {
+			deletarFotoDoStorage(aluno.getFoto());
+		}
+
+		String nomeArquivo = salvarFotoNoStorage(arquivo, id);
+		aluno.setFoto(nomeArquivo);
+		alunoRepository.save(aluno);
+	}
+
+	public Resource getFoto(Long id) {
+		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
+
+		if (aluno.getFoto() == null) {
+			throw new ProcessamentoFotoException("Foto de aluno não encontrada");
+		}
+
+		return carregarFotoDoStorage(aluno.getFoto());
+	}
+
+	public void removerFoto(Long id) {
+		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
+
+		if (aluno.getFoto() != null) {
+			deletarFotoDoStorage(aluno.getFoto());
+			aluno.setFoto(null);
+			alunoRepository.save(aluno);
+		}
+	}
+
+	private String salvarFotoNoStorage(MultipartFile arquivo, Long alunoId) {
 		String extensao = StringUtils.getFilenameExtension(arquivo.getOriginalFilename());
 		String nomeArquivo = "aluno_" + alunoId + "_" + System.currentTimeMillis() + "." + extensao;
 
@@ -45,19 +84,22 @@ public class AlunoFotoService {
 		}
 	}
 
-	public Resource carregarFoto(String nomeArquivo) {
+	private Resource carregarFotoDoStorage(String nomeArquivo) {
 		try {
 			Path caminho = this.storageLocation.resolve(nomeArquivo).normalize();
 			Resource resource = new UrlResource(caminho.toUri());
-			if (resource.exists())
+
+			if (resource.exists()) {
 				return resource;
+			}
+
 			throw new ProcessamentoFotoException("Arquivo não encontrado: " + nomeArquivo);
 		} catch (MalformedURLException e) {
 			throw new ProcessamentoFotoException("Arquivo não encontrado: " + nomeArquivo, e);
 		}
 	}
 
-	public void deletarFoto(String nomeArquivo) {
+	private void deletarFotoDoStorage(String nomeArquivo) {
 		try {
 			Path caminho = this.storageLocation.resolve(nomeArquivo).normalize();
 			Files.deleteIfExists(caminho);
@@ -67,8 +109,9 @@ public class AlunoFotoService {
 	}
 
 	private void validarArquivo(MultipartFile arquivo) {
-		if (arquivo.isEmpty())
+		if (arquivo.isEmpty()) {
 			throw new ProcessamentoFotoException("Arquivo vazio");
+		}
 
 		String contentType = arquivo.getContentType();
 		if (contentType == null || !contentType.startsWith("image/")) {
