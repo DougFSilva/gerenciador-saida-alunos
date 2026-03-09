@@ -18,6 +18,8 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 	}
 
 	Page<Aluno> findByTurma(Turma turma, Pageable paginacao);
+	
+	Page<Aluno> findByNomeContainingIgnoreCase(String nome, Pageable paginacao);
 
 	Optional<Aluno> findByMatricula(String matricula);
 

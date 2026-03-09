@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dougfsilva.controlesaidaescolar.config.PasswordService;
 import com.dougfsilva.controlesaidaescolar.config.SecurityUtils;
+import com.dougfsilva.controlesaidaescolar.dto.AlteraSenhaForm;
 import com.dougfsilva.controlesaidaescolar.exceptions.ObjetoNaoEncontradoException;
 import com.dougfsilva.controlesaidaescolar.exceptions.SenhaInvalidaException;
 import com.dougfsilva.controlesaidaescolar.model.Usuario;
@@ -23,21 +24,21 @@ public class AlteraSenhaService {
 	private final SecurityUtils securityUtils;
 
 	@Transactional
-	public void alterar(String senhaAtual, String novaSenha) {
+	public void alterar(AlteraSenhaForm form) {
 		String emailUsuario = securityUtils.getUsuarioAtual();
 		Usuario usuario = repository.findByEmail(emailUsuario).orElseThrow(() -> new ObjetoNaoEncontradoException(
 				String.format("Usuário com email '%s' não encontrado.", emailUsuario)));
 
-		if (!passwordService.validar(senhaAtual, usuario.getSenha())) {
+		if (!passwordService.validar(form.senhaAtual(), usuario.getSenha())) {
 			throw new SenhaInvalidaException("A senha atual informada está incorreta.");
 		}
 		
-		if (passwordService.validar(novaSenha, usuario.getSenha())) {
+		if (passwordService.validar(form.novaSenha(), usuario.getSenha())) {
             throw new SenhaInvalidaException("A nova senha não pode ser igual à senha atual.");
         }
 
-		usuario.setSenha(passwordService.criptografar(novaSenha));
-		usuario.setSenhaAlterada(true); // Isso fará isAccountNonExpired retornar true
+		usuario.setSenha(passwordService.criptografar(form.novaSenha()));
+		usuario.setSenhaAlterada(true);
 
 		repository.save(usuario);
 		log.info("Usuário [{}] alterou sua senha com sucesso.", securityUtils.getUsuarioAtual());

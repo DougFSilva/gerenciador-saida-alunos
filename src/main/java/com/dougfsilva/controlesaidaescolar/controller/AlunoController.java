@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -80,14 +81,21 @@ public class AlunoController {
 		return ResponseEntity.ok().body(aluno);
 	}
 
-	@GetMapping("/matricula/{matricula}")
+	@GetMapping("/matricula")
 	@Operation(summary = "Busca pela matrícula", description = "Localiza um aluno utilizando seu número de matrícula único")
 	@ApiResponse(responseCode = "200", description = "Aluno encontrado")
-	public ResponseEntity<Aluno> buscarPelaMatricula(@PathVariable String matricula) {
+	public ResponseEntity<Aluno> buscarPelaMatricula(@RequestParam String matricula) {
 		Aluno aluno = buscaAlunoService.buscarPelaMatricula(matricula);
 		return ResponseEntity.ok().body(aluno);
 	}
 
+	@GetMapping("/nome")
+	@Operation(summary = "Lista alunos por nome", description = "Retorna os alunos filtrados pelo nome com paginação")
+	public ResponseEntity<Page<Aluno>> buscarPeloNome(@RequestParam String nome, Pageable paginacao) {
+		Page<Aluno> alunos = buscaAlunoService.buscarPeloNome(nome, paginacao);
+		return ResponseEntity.ok().body(alunos);
+	}
+	
 	@GetMapping("/turma/{id}")
 	@Operation(summary = "Lista alunos por turma", description = "Retorna uma página de alunos vinculados a uma turma específica")
 	public ResponseEntity<Page<Aluno>> buscarPelaTurma(@PathVariable Long id, Pageable paginacao) {

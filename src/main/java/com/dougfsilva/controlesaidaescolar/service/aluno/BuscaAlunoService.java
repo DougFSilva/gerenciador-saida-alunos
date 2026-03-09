@@ -38,6 +38,11 @@ public class BuscaAlunoService {
 	}
 	
 	@PreAuthorize("hasRole('isAuthenticated()')")
+	public Page<Aluno> buscarPeloNome(String nome, Pageable paginacao) {
+		return alunoRepository.findByNomeContainingIgnoreCase(nome, paginacao);
+	}
+	
+	@PreAuthorize("hasRole('isAuthenticated()')")
 	public Page<Aluno> buscarTodos(Pageable paginacao) {
 		return alunoRepository.findAll(paginacao);
 	}
