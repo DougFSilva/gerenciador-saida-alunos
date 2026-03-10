@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.service.turma;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class EditaTurmaService {
 	
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
+	@CacheEvict(value = "listaDeTurmas", allEntries = true)
 	public Turma editar(Long id, TurmaUpdateForm form) {
 		Turma turma = repository.findByIdOrElseThrow(id);
 		if(!turma.getNome().equalsIgnoreCase(form.nome()) || turma.getAnoLetivo() != form.anoLetivo()) {
