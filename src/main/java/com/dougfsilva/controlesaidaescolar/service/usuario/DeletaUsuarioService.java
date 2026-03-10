@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.service.usuario;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class DeletaUsuarioService {
 
 	@Transactional
 	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
+	@CacheEvict(value = "listaDeUsuarios", allEntries = true)
 	public void deletar(Long id) {
 		Usuario usuario = usuarioRepository.findByIdOrElseThrow(id);
 		validarUsuarioSemRegistroDeSaida(usuario);

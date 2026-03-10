@@ -1,6 +1,7 @@
 package com.dougfsilva.controlesaidaescolar.service.usuario;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class CriaUsuarioService {
 	
 	@Transactional
 	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
+	@CacheEvict(value = "listaDeUsuarios", allEntries = true)
 	public Usuario criar(UsuarioForm form) {
 		usuarioValidator.validarUnicidadeEmail(form.email());
 		String senhaCriptografada = passwordService.criptografar(senha);

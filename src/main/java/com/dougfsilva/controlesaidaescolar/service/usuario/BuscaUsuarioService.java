@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.service.usuario;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,16 +24,19 @@ public class BuscaUsuarioService {
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
+	@Cacheable(value = "listaDeUsuarios", key = "{#root.methodName, #nome, #paginacao.pageNumber, #paginacao.pageSize}")
 	public Page<Usuario> buscarPeloNome(String nome, Pageable paginacao) {
 		return repository.findByNomeContainingIgnoreCase(nome, paginacao);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
+	@Cacheable(value = "listaDeUsuarios", key = "{#root.methodName, #perfil, #paginacao.pageNumber, #paginacao.pageSize}")
 	public Page<Usuario> buscarPeloPerfil(PerfilUsuario perfil, Pageable paginacao) {
 		return repository.findByPerfil(perfil, paginacao);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER')")
+	@Cacheable(value = "listaDeUsuarios", key = "{#root.methodName, #paginacao.pageNumber, #paginacao.pageSize}")
 	public Page<Usuario> buscarTodos(Pageable paginacao) {
 		return repository.findAll(paginacao);
 	}

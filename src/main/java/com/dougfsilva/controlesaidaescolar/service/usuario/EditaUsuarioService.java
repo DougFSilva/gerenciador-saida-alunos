@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.service.usuario;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class EditaUsuarioService {
 
 	@PreAuthorize("hasAnyRole('ADMIN', 'MASTER') or (hasRole('FUNCIONARIO') and #form.id() == principal.id)")
 	@Transactional
+	@CacheEvict(value = "listaDeUsuarios", allEntries = true)
 	public Usuario editar(Long id, UsuarioUpdateForm form) {
 		Usuario usuario = repository.findByIdOrElseThrow(id);
 		if (!usuario.getEmail().equalsIgnoreCase(form.email())) {
