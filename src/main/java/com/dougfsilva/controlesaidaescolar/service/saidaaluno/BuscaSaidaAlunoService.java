@@ -43,5 +43,9 @@ public class BuscaSaidaAlunoService {
 		return saidaAlunoRepository.findBySolicitacaoDataHoraSolicitacaoBetween(inicio, fim, paginacao);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	public Page<SaidaAluno> buscarTodas(Pageable paginacao) {
+		return saidaAlunoRepository.findAll(paginacao);
+	}
 	
 }
