@@ -32,8 +32,7 @@ public interface SaidaAlunoRepository extends JpaRepository<SaidaAluno, Long> {
 
 	boolean existsByAluno(Aluno aluno);
 
-	boolean existsBySolicitadoPorOrConfirmadoPorOrCanceladoPor(Usuario solicitadoPor, Usuario confirmadoPor,
-			Usuario CanceladoPor);
+	boolean existsBySolicitacaoSolicitadaPor(Usuario solicitadoPor);
 
 	boolean existsByAlunoAndStatusAndSolicitacaoDataHoraSolicitacaoBetween(Aluno aluno, StatusSaida status,
 			LocalDateTime inicio, LocalDateTime fim);

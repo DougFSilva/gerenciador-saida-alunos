@@ -20,9 +20,9 @@ public class CancelamentoSaida {
 	private LocalDateTime dataHoraCancelamento;
 	
 	@ManyToOne
-	@JoinColumn(name = "usuario_id")
+	@JoinColumn(name = "cancelada_por")
 	private Usuario canceladaPor;
 	
-	@Column(name = "obs_confirmacao", length = 255)
-	private String ObsCancelamento;
+	@Column(name = "obs_cancelamento", length = 255)
+	private String obsCancelamento;
 }

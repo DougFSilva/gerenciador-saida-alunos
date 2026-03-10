@@ -20,9 +20,9 @@ public class ConfirmacaoSaida {
 	private LocalDateTime dataHoraConfirmacao;
 	
 	@ManyToOne
-	@JoinColumn(name = "usuario_id")
+	@JoinColumn(name = "confirmada_por")
 	private Usuario confirmadaPor;
 	
 	@Column(name = "obs_confirmacao", length = 255)
-	private String ObsConfirmacao;
+	private String obsConfirmacao;
 }

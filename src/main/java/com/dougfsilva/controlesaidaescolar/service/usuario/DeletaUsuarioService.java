@@ -36,7 +36,7 @@ public class DeletaUsuarioService {
 	}
 
 	private void validarUsuarioSemRegistroDeSaida(Usuario usuario) {
-		if (saidaAlunoRepository.existsBySolicitadoPorOrConfirmadoPorOrCanceladoPor(usuario, usuario, usuario)) {
+		if (saidaAlunoRepository.existsBySolicitacaoSolicitadaPor(usuario)) {
 			throw new EntidadeEmUsoException(
 					String.format("O usuário '%s' não pode ser removido pois existem registro de saída de alunos associados a ele."));
 		}

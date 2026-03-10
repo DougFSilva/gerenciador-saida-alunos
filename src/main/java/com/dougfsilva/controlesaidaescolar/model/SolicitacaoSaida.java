@@ -20,9 +20,9 @@ public class SolicitacaoSaida {
 	private LocalDateTime dataHoraSolicitacao;
 	
 	@ManyToOne
-	@JoinColumn(name = "usuario_id", nullable = false, updatable = false)
+	@JoinColumn(name = "solicitada_por", nullable = false, updatable = false)
 	private Usuario solicitadaPor;
 	
 	@Column(name = "obs_solicitacao", length = 255)
-	private String ObsSolicitacao;
+	private String obsSolicitacao;
 }
