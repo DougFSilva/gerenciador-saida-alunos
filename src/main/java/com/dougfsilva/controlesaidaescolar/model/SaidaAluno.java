@@ -1,14 +1,12 @@
 package com.dougfsilva.controlesaidaescolar.model;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -31,20 +29,19 @@ public class SaidaAluno {
 	@Enumerated(EnumType.STRING)
 	private StatusSaida status;
 
-	@ManyToOne
-    @JoinColumn(name = "solicitado_por_id")
-    private Usuario solicitadoPor;
-    private LocalDateTime solicitadaEm;
+	@Embedded
+    private SolicitacaoSaida solicitacao;
 
-    @ManyToOne
-    @JoinColumn(name = "confirmado_por_id")
-    private Usuario confirmadoPor;
-    private LocalDateTime confirmadaEm;
+    @Embedded
+    private ConfirmacaoSaida confirmacao;
 
-    @ManyToOne
-    @JoinColumn(name = "cancelado_por_id")
-    private Usuario canceladoPor;
-    private LocalDateTime canceladaEm;
+    @Embedded
+    private CancelamentoSaida cancelamento;
+
+	public SaidaAluno(Aluno aluno, StatusSaida status, SolicitacaoSaida solicitacao) {
+		this.aluno = aluno;
+		this.status = status;
+		this.solicitacao = solicitacao;
+	}
 	
-	private String observacao;
 }

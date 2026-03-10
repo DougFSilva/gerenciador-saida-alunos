@@ -20,6 +20,7 @@ import com.dougfsilva.controlesaidaescolar.exceptions.ErroInesperadoException;
 import com.dougfsilva.controlesaidaescolar.exceptions.ObjetoNaoEncontradoException;
 import com.dougfsilva.controlesaidaescolar.exceptions.ProcessamentoFotoException;
 import com.dougfsilva.controlesaidaescolar.exceptions.RegistroDuplicadoException;
+import com.dougfsilva.controlesaidaescolar.exceptions.RegraDeNegocioException;
 import com.dougfsilva.controlesaidaescolar.exceptions.SenhaInvalidaException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -110,6 +111,17 @@ public class ExceptionHandlerController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 	}
 	
+	@ExceptionHandler(RegraDeNegocioException.class)
+	public ResponseEntity<ErroResponse> regraDeNegocioException(
+			RegraDeNegocioException e,
+			HttpServletRequest request) {
+		ErroResponse erro = new ErroResponse(
+				OffsetDateTime.now(ZoneOffset.UTC), 
+				HttpStatus.BAD_REQUEST.value(), 
+				e.getMessage(),
+				request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErroResponse> methodArgumentNotValidException(MethodArgumentNotValidException e,

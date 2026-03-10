@@ -35,7 +35,7 @@ public class CriaUsuarioService {
 		Usuario usuario = new Usuario(form.nome(), form.cpf(), form.email(), senhaCriptografada, form.perfil());
 		Usuario usuarioCriado = repository.save(usuario);
 		log.info("Usuário [{}] criou o Usuário {} com sucesso.", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             usuarioCriado.getId());
 		return usuarioCriado;
 	}

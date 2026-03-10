@@ -28,7 +28,7 @@ public class CriaTurmaService {
 		Turma turma = new Turma(null, form.nome(), form.turno(), form.anoLetivo(), true);
 		Turma turmaCriada = repository.save(turma);
 		log.info("Usuário [{}] criou a turma com sucesso! ID: {}", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             turmaCriada.getId());
 		return turmaCriada;
 	}

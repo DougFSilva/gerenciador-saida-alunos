@@ -1,0 +1,7 @@
+Pendências:
+Configuração de onde vai salvar os logs
+ExceptiomHandler
+
+Concluir SaidaAluno
+Implementar cache
+Campos notnull no banco de dados atraves de model

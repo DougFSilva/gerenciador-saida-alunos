@@ -20,29 +20,29 @@ public class BuscaAlunoService {
 	private final AlunoRepository alunoRepository;
 	private final TurmaRepository turmaRepository;
 
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Aluno buscarPeloId(Long id) {
 		return alunoRepository.findByIdOrElseThrow(id);
 	}
 
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Aluno buscarPelaMatricula(String matricula) {
 		return alunoRepository.findByMatricula(matricula).orElseThrow(() -> new ObjetoNaoEncontradoException(
 				String.format("Aluno com matrícula '%s' não encontrado", matricula)));
 	}
 	
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Page<Aluno> buscarPelaTurma(Long turmaId, Pageable paginacao) {
 		Turma turma = turmaRepository.findByIdOrElseThrow(turmaId);
 		return alunoRepository.findByTurma(turma, paginacao);
 	}
 	
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Page<Aluno> buscarPeloNome(String nome, Pageable paginacao) {
 		return alunoRepository.findByNomeContainingIgnoreCase(nome, paginacao);
 	}
 	
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Page<Aluno> buscarTodos(Pageable paginacao) {
 		return alunoRepository.findAll(paginacao);
 	}

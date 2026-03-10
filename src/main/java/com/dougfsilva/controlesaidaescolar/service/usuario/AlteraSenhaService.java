@@ -27,7 +27,7 @@ public class AlteraSenhaService {
 	@Transactional
 	@PreAuthorize("isAuthenticated()")
 	public void alterar(AlteraSenhaForm form) {
-		String emailUsuario = securityUtils.getUsuarioAtual();
+		String emailUsuario = securityUtils.getUsernameUsuarioAtual();
 		Usuario usuario = repository.findByEmail(emailUsuario).orElseThrow(() -> new ObjetoNaoEncontradoException(
 				String.format("Usuário com email '%s' não encontrado.", emailUsuario)));
 
@@ -43,7 +43,7 @@ public class AlteraSenhaService {
 		usuario.setSenhaAlterada(true);
 
 		repository.save(usuario);
-		log.info("Usuário [{}] alterou sua senha com sucesso.", securityUtils.getUsuarioAtual());
+		log.info("Usuário [{}] alterou sua senha com sucesso.", securityUtils.getUsernameUsuarioAtual());
 	}
 
 }

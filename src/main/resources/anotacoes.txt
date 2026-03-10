@@ -1,4 +1,0 @@
-Pendências:
-Configuração de onde vai salvar os logs
-ExceptiomHandler
-

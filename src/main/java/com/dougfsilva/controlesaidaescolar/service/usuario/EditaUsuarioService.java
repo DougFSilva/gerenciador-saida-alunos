@@ -35,10 +35,10 @@ public class EditaUsuarioService {
 			usuario.setPerfil(form.perfil());
 			usuario.setAtivo(form.ativo());
 		} else {
-			log.warn("Usuário {} tentou alterar campos restritos, mas não possui permissão.", securityUtils.getUsuarioAtual());
+			log.warn("Usuário {} tentou alterar campos restritos, mas não possui permissão.", securityUtils.getUsernameUsuarioAtual());
 		}
 		Usuario usuarioEditado = repository.save(usuario);
-		log.info("Usuário [{}] editou o Usuário {} com sucesso.", securityUtils.getUsuarioAtual(),
+		log.info("Usuário [{}] editou o Usuário {} com sucesso.", securityUtils.getUsernameUsuarioAtual(),
 				usuarioEditado.getId());
 		return usuarioEditado;
 	}

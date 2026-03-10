@@ -29,7 +29,7 @@ public class DeletaUsuarioService {
 		validarUsuarioSemRegistroDeSaida(usuario);
 		usuarioRepository.delete(usuario);
 		log.info("Usuário [{}] deletou o Usuário {} com sucesso.", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             id);
 	}
 

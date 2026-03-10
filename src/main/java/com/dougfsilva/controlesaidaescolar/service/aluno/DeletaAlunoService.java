@@ -29,7 +29,7 @@ public class DeletaAlunoService {
 		validarAlunoSemSaidasRegistradas(aluno);
 		alunoRepository.delete(aluno);
 		log.info("Usuário [{}] excluiu o aluno {} com sucesso.", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             id);	
 	}
 

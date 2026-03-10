@@ -38,7 +38,7 @@ public class EditaAlunoService {
 		aluno.setNome(form.nome());
 		aluno.setTurma(turma);
 		Aluno alunoEditado = alunoRepository.save(aluno);
-		log.info("Usuário [{}] editou a Aluno {} com sucesso.", securityUtils.getUsuarioAtual(), alunoEditado.getId());
+		log.info("Usuário [{}] editou a Aluno {} com sucesso.", securityUtils.getUsernameUsuarioAtual(), alunoEditado.getId());
 		return alunoEditado;
 
 	}

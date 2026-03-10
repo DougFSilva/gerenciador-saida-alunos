@@ -32,7 +32,7 @@ public class CriaAlunoService {
 		Aluno aluno = new Aluno(form.matricula(), form.nome(), form.dataNascimento(), turma);
 		Aluno alunoCriado = alunoRepository.save(aluno);
 		log.info("Usuário [{}] criou o Aluno {} com sucesso.", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             alunoCriado.getId());			
 		return alunoCriado;
 

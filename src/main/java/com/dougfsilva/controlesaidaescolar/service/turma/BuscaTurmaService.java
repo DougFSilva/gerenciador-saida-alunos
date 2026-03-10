@@ -18,22 +18,22 @@ public class BuscaTurmaService {
 	
 	private final TurmaRepository repository;
 	
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Turma buscarPeloId(Long id) {
 		return repository.findByIdOrElseThrow(id);
 	}
 	
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Page<Turma> buscarPeloNome(String nome, Pageable paginacao) {
 		return repository.findByNomeContainingIgnoreCase(nome, paginacao);
 	}
 	
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public List<Turma> buscarPeloAnoLetivo(Integer anoLetivo) {
 		return repository.findByAnoLetivoOrderByAnoLetivoDesc(anoLetivo);
 	}
 	
-	@PreAuthorize("hasRole('isAuthenticated()')")
+	@PreAuthorize("isAuthenticated()")
 	public Page<Turma> buscarTodas(Pageable paginacao) {
 		return repository.findAll(paginacao);
 	}

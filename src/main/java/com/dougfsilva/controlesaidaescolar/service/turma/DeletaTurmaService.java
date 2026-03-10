@@ -28,7 +28,7 @@ public class DeletaTurmaService {
 		validarTurmaSemAlunos(turma);
 		turmaRepository.delete(turma);
 		log.info("Usuário [{}] excluiu a Turma {} com sucesso.", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             id);	
 		}
 

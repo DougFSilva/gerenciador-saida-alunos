@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.dougfsilva.controlesaidaescolar.exceptions.ObjetoNaoEncontradoException;
 import com.dougfsilva.controlesaidaescolar.model.Turma;
 
+@Repository
 public interface TurmaRepository extends JpaRepository<Turma, Long> {
 
 	default Turma findByIdOrElseThrow(Long ID) {

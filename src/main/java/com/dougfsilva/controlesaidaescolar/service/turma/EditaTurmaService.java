@@ -34,7 +34,7 @@ public class EditaTurmaService {
 		turma.setAtiva(form.ativa());
 		Turma turmaEditada = repository.save(turma);
 		log.info("Usuário [{}] editou a Turma {} com sucesso.", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             turmaEditada.getId());
 		return turmaEditada;
 	}

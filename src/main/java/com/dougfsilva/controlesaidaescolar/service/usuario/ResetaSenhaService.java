@@ -34,7 +34,7 @@ public class ResetaSenhaService {
 		usuario.setSenhaAlterada(false);
 		Usuario usuarioComSenhaResetada = repository.save(usuario);
 		log.info("Usuário [{}] resetou a senha do Usuário {} com sucesso.", 
-	             securityUtils.getUsuarioAtual(), 
+	             securityUtils.getUsernameUsuarioAtual(), 
 	             usuarioComSenhaResetada.getId());
 	}
 }
