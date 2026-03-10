@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,15 +31,26 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false, length = 100)
 	private String nome;
+	
+	@Column(nullable = false, unique = true, length = 11)
 	private String cpf;
+	
+	@Column(nullable = false, unique = true, length = 100)
 	private String email;
+	
+	@Column(nullable = false)
 	private String senha;
 
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 30)
 	private PerfilUsuario perfil;
 
+	@Column(nullable = false)
 	private Boolean ativo = true;
+	
+	@Column(name = "senha_alterada", nullable = false)
 	private Boolean senhaAlterada = false;
 
 	public Usuario(String nome, String cpf, String email, String senha, PerfilUsuario perfil) {

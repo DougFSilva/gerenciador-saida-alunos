@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +42,7 @@ public class AlunoFotoService {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@Transactional
+	@CacheEvict(value = "listaDeAlunos", allEntries = true)
 	public void atualizarFoto(Long id, MultipartFile arquivo) {
 		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
 
@@ -68,6 +70,7 @@ public class AlunoFotoService {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@Transactional
+	@CacheEvict(value = "listaDeAlunos", allEntries = true)
 	public void removerFoto(Long id) {
 		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
 

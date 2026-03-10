@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.service.aluno;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class CriaAlunoService {
 	
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN')")
+	@CacheEvict(value = "listaDeAlunos", allEntries = true)
 	public Aluno criar(AlunoForm form) {
 		alunoValidator.validarUnicidadeMatricula(form.matricula());
 		Turma turma = turmaRepository.findByIdOrElseThrow(form.turmaId());

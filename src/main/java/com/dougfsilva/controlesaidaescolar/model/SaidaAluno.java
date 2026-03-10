@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,15 +19,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(name = "saidas_alunos")
 public class SaidaAluno {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "aluno_id")
+	@JoinColumn(name = "aluno_id", nullable = false, updatable = false)
 	private Aluno aluno;
 
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	private StatusSaida status;
 
 	@Embedded

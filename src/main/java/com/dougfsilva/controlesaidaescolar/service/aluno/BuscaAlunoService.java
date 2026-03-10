@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.service.aluno;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,17 +33,20 @@ public class BuscaAlunoService {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "listaDeAlunos", key = "{#root.methodName, #turmaId, #paginacao.pageNumber, #paginacao.pageSize}")	
 	public Page<Aluno> buscarPelaTurma(Long turmaId, Pageable paginacao) {
 		Turma turma = turmaRepository.findByIdOrElseThrow(turmaId);
 		return alunoRepository.findByTurma(turma, paginacao);
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "listaDeAlunos", key = "{#root.methodName, #nome, #paginacao.pageNumber, #paginacao.pageSize}")
 	public Page<Aluno> buscarPeloNome(String nome, Pageable paginacao) {
 		return alunoRepository.findByNomeContainingIgnoreCase(nome, paginacao);
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "listaDeAlunos", key = "{#root.methodName, #paginacao.pageNumber, #paginacao.pageSize}")
 	public Page<Aluno> buscarTodos(Pageable paginacao) {
 		return alunoRepository.findAll(paginacao);
 	}

@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,12 +27,16 @@ public class Turma {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false, length = 50)
 	private String nome;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	private Turno turno;
 	
+	@Column(name = "ano_letivo", nullable = false)
 	private Integer anoLetivo;
 	
+	@Column(nullable = false)
 	private boolean ativa = true;
 }

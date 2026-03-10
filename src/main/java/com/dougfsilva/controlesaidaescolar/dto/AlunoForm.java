@@ -14,6 +14,7 @@ public record AlunoForm(
 		String nome,
 		
 		@NotBlank(message = "A matrícula é obrigatória") 
+		@Size(min = 3, max = 20, message = "A matrícula deve ter entre 3 e 20 caracteres") 
 		String matricula,
 
 		@NotNull(message = "A data de nascimento é obrigatória") 

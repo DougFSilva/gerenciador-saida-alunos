@@ -21,6 +21,7 @@ import jakarta.validation.constraints.Size;
 
 		    @NotBlank(message = "O e-mail é obrigatório")
 		    @Email(message = "E-mail em formato inválido")
+		    @Size(min = 3, max = 100, message = "O email deve ter entre 3 e 100 caracteres")
 		    String email, 
 
 		    @NotNull(message = "O perfil do usuário é obrigatório")
