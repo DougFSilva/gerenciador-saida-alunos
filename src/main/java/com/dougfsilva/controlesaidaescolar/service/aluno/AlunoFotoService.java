@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +40,7 @@ public class AlunoFotoService {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
+	@Transactional
 	public void atualizarFoto(Long id, MultipartFile arquivo) {
 		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
 
@@ -65,6 +67,7 @@ public class AlunoFotoService {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
+	@Transactional
 	public void removerFoto(Long id) {
 		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
 
