@@ -2,9 +2,3 @@ Pendências:
 Configuração de onde vai salvar os logs
 ExceptiomHandler
 
-
-Adicionar isso ao security para permitir que o usuário altere sua senha. Obs.: Ajustar o nome do endpoint
-.authorizeHttpRequests(auth -> auth
-    .requestMatchers("/api/usuarios/alterar-senha-obrigatoria").authenticated() // Permite logado, mesmo expirado
-    .anyRequest().authenticated()
-)

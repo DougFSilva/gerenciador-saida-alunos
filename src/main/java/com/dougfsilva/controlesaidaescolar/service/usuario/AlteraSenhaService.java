@@ -1,5 +1,6 @@
 package com.dougfsilva.controlesaidaescolar.service.usuario;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ public class AlteraSenhaService {
 	private final SecurityUtils securityUtils;
 
 	@Transactional
+	@PreAuthorize("isAuthenticated()")
 	public void alterar(AlteraSenhaForm form) {
 		String emailUsuario = securityUtils.getUsuarioAtual();
 		Usuario usuario = repository.findByEmail(emailUsuario).orElseThrow(() -> new ObjetoNaoEncontradoException(
