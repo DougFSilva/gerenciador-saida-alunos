@@ -39,5 +39,5 @@ public class DeletaAlunoService {
 					.format("O aluno '%s' não pode ser removido pois há saídas registradas para ele", aluno.getNome()));
 		}
 	}
-
+	
 }

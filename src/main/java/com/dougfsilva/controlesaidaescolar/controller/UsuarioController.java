@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dougfsilva.controlesaidaescolar.dto.AlteraSenhaForm;
-import com.dougfsilva.controlesaidaescolar.dto.UsuarioDto;
+import com.dougfsilva.controlesaidaescolar.dto.UsuarioResponse;
 import com.dougfsilva.controlesaidaescolar.dto.UsuarioForm;
 import com.dougfsilva.controlesaidaescolar.dto.UsuarioUpdateForm;
 import com.dougfsilva.controlesaidaescolar.model.PerfilUsuario;
@@ -56,10 +56,10 @@ public class UsuarioController {
 		@ApiResponse(responseCode = "201", description = "Usuário criado com sucesso"),
 		@ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
 	})
-	public ResponseEntity<UsuarioDto> criar(@Valid @RequestBody UsuarioForm form) {
+	public ResponseEntity<UsuarioResponse> criar(@Valid @RequestBody UsuarioForm form) {
 		Usuario usuario = criaUsuarioService.criar(form);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
-		return ResponseEntity.created(uri).body(UsuarioDto.toDto(usuario));
+		return ResponseEntity.created(uri).body(UsuarioResponse.toDto(usuario));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -73,37 +73,37 @@ public class UsuarioController {
 	@PutMapping("/{id}")
 	@Operation(summary = "Atualiza um usuário", description = "Atualiza informações básicas (exceto senha) de um usuário existente")
 	@ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso")
-	public ResponseEntity<UsuarioDto> editar(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateForm form) {
+	public ResponseEntity<UsuarioResponse> editar(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateForm form) {
 		Usuario usuario = editaUsuarioService.editar(id, form);
-		return ResponseEntity.ok().body(UsuarioDto.toDto(usuario));
+		return ResponseEntity.ok().body(UsuarioResponse.toDto(usuario));
 	}
 	
 	@GetMapping("/{id}")
 	@Operation(summary = "Busca por ID", description = "Retorna os dados públicos de um usuário específico")
 	@ApiResponse(responseCode = "200", description = "Usuário encontrado")
-	public ResponseEntity<UsuarioDto> buscarPeloId(@PathVariable Long id) {
+	public ResponseEntity<UsuarioResponse> buscarPeloId(@PathVariable Long id) {
 		Usuario usuario = buscaUsuarioService.buscarPeloId(id);
-		return ResponseEntity.ok().body(UsuarioDto.toDto(usuario));
+		return ResponseEntity.ok().body(UsuarioResponse.toDto(usuario));
 	}
 	
 	@GetMapping("/nome")
 	@Operation(summary = "Busca por nome", description = "Lista usuários cujo nome contenha o termo pesquisado")
-	public ResponseEntity<Page<UsuarioDto>> buscarPeloNome(@RequestParam String nome, Pageable paginacao) {
-		Page<UsuarioDto> usuarios = buscaUsuarioService.buscarPeloNome(nome, paginacao).map(UsuarioDto::toDto);
+	public ResponseEntity<Page<UsuarioResponse>> buscarPeloNome(@RequestParam String nome, Pageable paginacao) {
+		Page<UsuarioResponse> usuarios = buscaUsuarioService.buscarPeloNome(nome, paginacao).map(UsuarioResponse::toDto);
 		return ResponseEntity.ok().body(usuarios);
 	}
 	
 	@GetMapping("/perfil")
 	@Operation(summary = "Busca por perfil", description = "Filtra usuários por tipo de permissão (ADMIN, PROFESSOR, etc)")
-	public ResponseEntity<Page<UsuarioDto>> buscarPeloPerfil(@RequestParam PerfilUsuario perfil, Pageable paginacao) {
-		Page<UsuarioDto> usuarios = buscaUsuarioService.buscarPeloPerfil(perfil, paginacao).map(UsuarioDto::toDto);
+	public ResponseEntity<Page<UsuarioResponse>> buscarPeloPerfil(@RequestParam PerfilUsuario perfil, Pageable paginacao) {
+		Page<UsuarioResponse> usuarios = buscaUsuarioService.buscarPeloPerfil(perfil, paginacao).map(UsuarioResponse::toDto);
 		return ResponseEntity.ok().body(usuarios);
 	}
 	
 	@GetMapping
 	@Operation(summary = "Listar todos", description = "Retorna todos os usuários cadastrados de forma paginada")
-	public ResponseEntity<Page<UsuarioDto>> buscarTodos(Pageable paginacao) {
-		Page<UsuarioDto> usuarios = buscaUsuarioService.buscarTodos(paginacao).map(UsuarioDto::toDto);
+	public ResponseEntity<Page<UsuarioResponse>> buscarTodos(Pageable paginacao) {
+		Page<UsuarioResponse> usuarios = buscaUsuarioService.buscarTodos(paginacao).map(UsuarioResponse::toDto);
 		return ResponseEntity.ok().body(usuarios);
 	}
 	

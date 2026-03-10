@@ -25,6 +25,10 @@ public interface SaidaAlunoRepository extends JpaRepository<SaidaAluno, Long> {
 	Page<SaidaAluno> findByAluno(Aluno aluno, Pageable paginacao);
 	
 	List<SaidaAluno> findByAluno(Aluno aluno);
+	
+	Page<SaidaAluno> findByStatus(StatusSaida status, Pageable paginacao);
+	
+	Page<SaidaAluno> findBySolicitacaoDataHoraSolicitacaoBetween(LocalDateTime inicio, LocalDateTime fim, Pageable paginacao);
 
 	boolean existsByAluno(Aluno aluno);
 

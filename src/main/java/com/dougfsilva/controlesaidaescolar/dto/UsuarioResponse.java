@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class UsuarioDto {
+public class UsuarioResponse {
 
 	private Long id;
 	private String nome;
@@ -20,7 +20,7 @@ public class UsuarioDto {
 	private Boolean ativo = true;
 	private Boolean senhaAlterada = false;
 	
-	private UsuarioDto(Usuario usuario) {
+	private UsuarioResponse(Usuario usuario) {
 		this.id = usuario.getId();
 		this.nome = usuario.getNome();
 		this.cpf = usuario.getCpf();
@@ -30,8 +30,8 @@ public class UsuarioDto {
 		this.senhaAlterada = usuario.getSenhaAlterada();
 	}
 	
-	public static UsuarioDto toDto(Usuario usuario) {
-		return new UsuarioDto(usuario);
+	public static UsuarioResponse toDto(Usuario usuario) {
+		return new UsuarioResponse(usuario);
 	}
 
 }
