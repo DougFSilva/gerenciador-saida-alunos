@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.dougfsilva.controlesaidaescolar.exceptions.ObjetoNaoEncontradoException;
 import com.dougfsilva.controlesaidaescolar.model.Aluno;
 import com.dougfsilva.controlesaidaescolar.model.SaidaAluno;
+import com.dougfsilva.controlesaidaescolar.model.StatusSaida;
 import com.dougfsilva.controlesaidaescolar.model.Usuario;
 
 @Repository
@@ -23,7 +24,7 @@ public interface SaidaAlunoRepository extends JpaRepository<SaidaAluno, Long> {
 	boolean existsBySolicitadoPorOrConfirmadoPorOrCanceladoPor(Usuario solicitadoPor, Usuario confirmadoPor,
 			Usuario CanceladoPor);
 
-	boolean existsByAlunoIdAndSolicitacaoDataHoraSolicitacaoBetween(Long alunoId, LocalDateTime inicio,
-			LocalDateTime fim);
+	boolean existsByAlunoAndStatusAndSolicitacaoDataHoraSolicitacaoBetween(Aluno aluno, StatusSaida status,
+			LocalDateTime inicio, LocalDateTime fim);
 
 }
