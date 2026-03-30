@@ -11,20 +11,20 @@ import jakarta.validation.constraints.Size;
 
 		public record UsuarioForm(
 
-		    @NotBlank(message = "O nome é obrigatório")
-		    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
+		    @NotBlank(message = "O nome é obrigatório.")
+		    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres.")
 		    String nome, 
 
-		    @NotBlank(message = "O CPF é obrigatório")
-		    @CPF(message = "CPF em formato inválido")
+		    @NotBlank(message = "O CPF é obrigatório.")
+		    @CPF(message = "CPF inexistente ou em formato inválido.")
 		    String cpf, 
 
-		    @NotBlank(message = "O e-mail é obrigatório")
-		    @Email(message = "E-mail em formato inválido")
-		    @Size(min = 3, max = 100, message = "O email deve ter entre 3 e 100 caracteres")
+		    @NotBlank(message = "O e-mail é obrigatório.")
+		    @Email(message = "E-mail em formato inválido.")
+		    @Size(min = 3, max = 100, message = "O email deve ter entre 3 e 100 caracteres.")
 		    String email, 
 
-		    @NotNull(message = "O perfil do usuário é obrigatório")
+		    @NotNull(message = "O perfil do usuário é obrigatório.")
 		    PerfilUsuario perfil
 		) {
 

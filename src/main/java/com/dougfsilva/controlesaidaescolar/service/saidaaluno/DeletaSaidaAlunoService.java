@@ -44,7 +44,6 @@ public class DeletaSaidaAlunoService {
 	
 	private List<SaidaAluno> filtrarSaidasPermitidasParaDeletar(List<SaidaAluno> saidas) {
         LocalDateTime dataLimite = LocalDateTime.now().minusYears(anosParaDelecao);
-        
         return saidas.stream()
                 .filter(saida -> saida.getSolicitacao().getDataHoraSolicitacao().isBefore(dataLimite))
                 .toList();

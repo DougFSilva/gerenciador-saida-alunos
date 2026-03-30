@@ -88,8 +88,8 @@ public class TurmaController {
 	
 	@GetMapping("/ano-letivo")
 	@Operation(summary = "Busca por ano letivo", description = "Retorna uma lista de turmas de um ano específico")
-	public ResponseEntity<List<Turma>> buscarPeloAnoLetivo(@RequestParam Integer anoLetivo) {
-		List<Turma> turmas = buscaTurmaService.buscarPeloAnoLetivo(anoLetivo);
+	public ResponseEntity<List<Turma>> buscarPeloAnoLetivo(@RequestParam Integer ano) {
+		List<Turma> turmas = buscaTurmaService.buscarPeloAnoLetivo(ano);
 		return ResponseEntity.ok().body(turmas);
 	}
 	

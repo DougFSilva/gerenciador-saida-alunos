@@ -2,9 +2,10 @@ package com.dougfsilva.controlesaidaescolar.dto;
 
 import com.dougfsilva.controlesaidaescolar.model.Turno;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record TurmaForm(
@@ -17,7 +18,8 @@ public record TurmaForm(
 	    Turno turno,
 
 	    @NotNull(message = "O ano letivo é obrigatório.")
-	    @Pattern(regexp = "\\d{4}", message = "O ano letivo deve conter exatamente 4 dígitos numéricos.")
+		@Min(value = 1000, message = "O ano letivo deve ter 4 dígitos.")
+		@Max(value = 9999, message = "O ano letivo deve ter 4 dígitos.")
 	    Integer anoLetivo
 	    
 		) {

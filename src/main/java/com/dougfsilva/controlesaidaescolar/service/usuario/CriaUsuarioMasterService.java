@@ -22,18 +22,20 @@ public class CriaUsuarioMasterService implements CommandLineRunner {
 
 	@Value("${senha.master}")
 	private String senhaMaster;
+	
+	@Value("${email.master}")
+	private String emailMaster;
 
 	@Override
 	public void run(String... args) throws Exception {
-		String emailAdmin = "master@sistema.com";
 
-		if (repository.findByEmail(emailAdmin).isEmpty()) {
+		if (repository.findByEmail(emailMaster).isEmpty()) {
 			log.info("Criando usuário Master padrão...");
 
 			String senhaCriptografada = passwordService.criptografar(senhaMaster);
 
 			Usuario master = new Usuario("Master do Sistema", "00000000000",
-					emailAdmin, senhaCriptografada, PerfilUsuario.MASTER
+					emailMaster, senhaCriptografada, PerfilUsuario.MASTER
 			);
 
 			repository.save(master);

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dougfsilva.controlesaidaescolar.config.SecurityUtils;
 import com.dougfsilva.controlesaidaescolar.dto.AlunoForm;
+import com.dougfsilva.controlesaidaescolar.exceptions.RegraDeNegocioException;
 import com.dougfsilva.controlesaidaescolar.model.Aluno;
 import com.dougfsilva.controlesaidaescolar.model.Turma;
 import com.dougfsilva.controlesaidaescolar.repository.AlunoRepository;
@@ -31,6 +32,7 @@ public class CriaAlunoService {
 	public Aluno criar(AlunoForm form) {
 		alunoValidator.validarUnicidadeMatricula(form.matricula());
 		Turma turma = turmaRepository.findByIdOrElseThrow(form.turmaId());
+		validarTurmaAtiva(turma);
 		Aluno aluno = new Aluno(form.matricula(), form.nome(), form.dataNascimento(), turma);
 		Aluno alunoCriado = alunoRepository.save(aluno);
 		log.info("Usuário [{}] criou o Aluno {} com sucesso.", 
@@ -38,6 +40,12 @@ public class CriaAlunoService {
 	             alunoCriado.getId());			
 		return alunoCriado;
 
+	}
+	
+	private void validarTurmaAtiva(Turma turma) {
+		if (!turma.isAtiva()) {
+			throw new RegraDeNegocioException(String.format("Não é possível criar o aluno pois a turma %s não está ativa", turma.getNome()));
+		}
 	}
 	
 	

@@ -1,3 +1,5 @@
 Pendências:
 
-Implementar cache
+Implementar websocket
+
+Verificar se permite criar alunos em turma que não esteja ativa

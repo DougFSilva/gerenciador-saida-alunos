@@ -29,6 +29,7 @@ public class SolicitaSaidaService {
 	private final SaidaAlunoRepository saidaAlunoRepository;
 	private final AlunoRepository alunoRepository;
 	private final SecurityUtils securityUtils;
+	private final EnviaNotificacaoWebsocketService notificacaoWebsocket;
 
 	@Transactional
 	@PreAuthorize("isAuthenticated()")
@@ -39,6 +40,7 @@ public class SolicitaSaidaService {
 		SolicitacaoSaida solicitacao = new SolicitacaoSaida(LocalDateTime.now(), usuarioAtual, form.observacao());
 		SaidaAluno saidaAluno = new SaidaAluno(aluno, StatusSaida.SOLICITADA, solicitacao);
 		SaidaAluno saidaAlunoCriada = saidaAlunoRepository.save(saidaAluno);
+		notificacaoWebsocket.enviar(saidaAlunoCriada);
 		log.info("Saída confirmada - Aluno: {} | Responsável: {}", aluno.getId(), usuarioAtual.getUsername());
 		return saidaAlunoCriada;
 	}
@@ -52,5 +54,5 @@ public class SolicitaSaidaService {
 					.format("O aluno %s já possui uma solicitação de saída registrada para hoje.", aluno.getId()));
 		}
 	}
-
+	
 }

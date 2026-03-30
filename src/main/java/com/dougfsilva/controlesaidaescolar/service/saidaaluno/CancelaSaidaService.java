@@ -24,6 +24,7 @@ public class CancelaSaidaService {
 
 	private final SaidaAlunoRepository saidaAlunoRepository;
 	private final SecurityUtils securityUtils;
+	private final EnviaNotificacaoWebsocketService notificacaoWebsocket;
 	
 	@Transactional
 	@PreAuthorize("isAuthenticated()")
@@ -35,6 +36,7 @@ public class CancelaSaidaService {
 		saidaAluno.setStatus(StatusSaida.CANCELADA);
 		SaidaAluno saidaAlunoAtualizada = saidaAlunoRepository.save(saidaAluno);
 		log.info("Saída cancelada - Aluno: {} | Responsável: {}", saidaAlunoAtualizada.getAluno().getId(), usuarioAtual.getUsername());
+		notificacaoWebsocket.enviar(saidaAlunoAtualizada);
 		return saidaAlunoAtualizada;
 	}
 	

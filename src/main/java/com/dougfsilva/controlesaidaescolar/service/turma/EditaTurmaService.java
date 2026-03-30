@@ -27,7 +27,7 @@ public class EditaTurmaService {
 	@CacheEvict(value = "listaDeTurmas", allEntries = true)
 	public Turma editar(Long id, TurmaUpdateForm form) {
 		Turma turma = repository.findByIdOrElseThrow(id);
-		if(!turma.getNome().equalsIgnoreCase(form.nome()) || turma.getAnoLetivo() != form.anoLetivo()) {
+		if(!turma.getNome().equalsIgnoreCase(form.nome()) || !turma.getAnoLetivo().equals(form.anoLetivo())) {
 			turmaValidator.validarUnicidade(form.nome(), form.anoLetivo());
 		}
 		turma.setNome(form.nome());

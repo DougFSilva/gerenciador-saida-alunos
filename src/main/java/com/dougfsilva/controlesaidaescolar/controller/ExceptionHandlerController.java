@@ -3,10 +3,13 @@ package com.dougfsilva.controlesaidaescolar.controller;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
+import javax.security.auth.login.AccountExpiredException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -185,6 +188,29 @@ public class ExceptionHandlerController {
 				request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
 	}
+	
+	@ExceptionHandler(AccountExpiredException.class)
+	public ResponseEntity<ErroResponse> accountExpiredException(AccountExpiredException e,
+			HttpServletRequest request) {
+		ErroResponse erro = new ErroResponse(
+				OffsetDateTime.now(ZoneOffset.UTC), 
+				HttpStatus.FORBIDDEN.value(), 
+				"Usuário com conta expirada. Contate um administrador e renove a data de validade para voltar a ter acesso",
+				request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
+	}
+	
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<ErroResponse> authenticationException(AuthenticationException e,
+			HttpServletRequest request) {
+		ErroResponse erro = new ErroResponse(
+				OffsetDateTime.now(ZoneOffset.UTC), 
+				HttpStatus.UNAUTHORIZED .value(), 
+				"Falha na autenticação. Verifique usuário e senha.",
+				request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED ).body(erro);
+	}
+	
 	
 	@ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
 	public ResponseEntity<ErroResponse> dataIntegrityViolationException(

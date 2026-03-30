@@ -1,0 +1,50 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: controle-saida-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: controle_saida_escolar
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-padmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: controle-saida-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/controle_saida_escolar?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_USERNAME: root
+      DB_PASSWORD: admin
+      JWT_SECRET: a4f25ce3d59e5c00d09a2d31fcb6d1a78391c6e4ea85b82b8a1f2147f12783a0q
+      JWT_EXPIRATION: 720
+      APP_SENHA_PADRAO: senhaPadrao
+      APP_SENHA_MASTER: senhaMaster
+      APP_EMAIL_MASTER: master@sistema.com
+      CORS_ORIGIN: http://localhost:4200
+      APP_UPLOAD_DIR: uploads/fotos
+      LOG_PATH: logs/controle-saida.log
+      LOG_LEVEL: INFO
+      JPA_DDL: update
+      JPA_SHOW_SQL: "false"
+    volumes:
+      - uploads_data:/app/uploads
+      - logs_data:/app/logs
+
+volumes:
+  mysql_data:
+  uploads_data:
+  logs_data:

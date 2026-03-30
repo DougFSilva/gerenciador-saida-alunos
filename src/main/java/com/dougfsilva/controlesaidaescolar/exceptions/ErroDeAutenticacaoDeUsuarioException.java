@@ -7,5 +7,9 @@ public class ErroDeAutenticacaoDeUsuarioException extends RuntimeException{
 	public ErroDeAutenticacaoDeUsuarioException(String mensagem) {
 		super(mensagem);
 	}
+	
+	public ErroDeAutenticacaoDeUsuarioException(String mensagem, Throwable causa) {
+		super(mensagem, causa);
+	}
 
 }

@@ -57,7 +57,7 @@ public class AlunoFotoService {
 		alunoRepository.save(aluno);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	public Resource getFoto(Long id) {
 		Aluno aluno = alunoRepository.findByIdOrElseThrow(id);
 

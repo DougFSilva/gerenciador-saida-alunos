@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioValidator {
 
+
 	private final UsuarioRepository repository;
 
 	public void validarUnicidadeEmail(String email) {
@@ -19,4 +20,12 @@ public class UsuarioValidator {
 					String.format("Usuário com email '%s' já existente no banco de dados", email));
 		}
 	}
+	
+	public void validarUnicidadeCpf(String cpf) {
+		if (repository.existsByCpf(cpf)) {
+			throw new RegistroDuplicadoException(
+					String.format("Usuário com cpf '%s' já existente no banco de dados", cpf));
+		}
+	}
+	
 }
