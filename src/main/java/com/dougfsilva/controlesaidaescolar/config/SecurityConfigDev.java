@@ -27,8 +27,9 @@ public class SecurityConfigDev {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // 🔥 libera tudo
+                        .anyRequest().permitAll()
                 )
                 .build();
     }
@@ -41,7 +42,7 @@ public class SecurityConfigDev {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuracao = new CorsConfiguration();
-        configuracao.setAllowedOrigins(List.of(frontendOrigin));
+        configuracao.setAllowedOriginPatterns(List.of("*"));
         configuracao.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuracao.setAllowedHeaders(List.of("*"));
         configuracao.setAllowCredentials(true);

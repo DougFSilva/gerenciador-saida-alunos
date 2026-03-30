@@ -37,12 +37,16 @@ public class SaidaAlunoResponse {
 		this.dataHoraSolicitacao = saida.getSolicitacao().getDataHoraSolicitacao();
 		this.solicitadaPor = UsuarioResponse.toDto(saida.getSolicitacao().getSolicitadaPor());
 		this.ObsSolicitacao = saida.getSolicitacao().getObsSolicitacao();
-		this.dataHoraConfirmacao = saida.getConfirmacao().getDataHoraConfirmacao();
-		this.confirmadaPor = UsuarioResponse.toDto(saida.getConfirmacao().getConfirmadaPor());
-		this.ObsConfirmacao = saida.getConfirmacao().getObsConfirmacao();
-		this.dataHoraCancelamento = saida.getCancelamento().getDataHoraCancelamento();
-		this.canceladaPor = UsuarioResponse.toDto(saida.getCancelamento().getCanceladaPor());
-		this.ObsCancelamento = saida.getCancelamento().getObsCancelamento();
+		var confirmacao = saida.getConfirmacao();
+		var cancelamento = saida.getCancelamento();
+
+		this.dataHoraConfirmacao = confirmacao != null ? confirmacao.getDataHoraConfirmacao() : null;
+		this.confirmadaPor = confirmacao != null ? UsuarioResponse.toDto(confirmacao.getConfirmadaPor()) : null;
+		this.ObsConfirmacao = confirmacao != null ? confirmacao.getObsConfirmacao() : null;
+
+		this.dataHoraCancelamento = cancelamento != null ? cancelamento.getDataHoraCancelamento() : null;
+		this.canceladaPor = cancelamento != null ? UsuarioResponse.toDto(cancelamento.getCanceladaPor()) : null;
+		this.ObsCancelamento = cancelamento != null ? cancelamento.getObsCancelamento() : null;
 	}
 	
 	public static SaidaAlunoResponse toDto(SaidaAluno saida) {
